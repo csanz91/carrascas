@@ -173,7 +173,18 @@ class Carrascas():
 
         self.client.loop_start()
 
-        # Threads config
+
+    def setupThreads(self):
+        """Initialize and start all the background threads
+
+        Args:
+            ---
+        Returns:
+           Does not return anything
+
+        """
+
+         # Threads config
         self.stopThreads = threading.Event()
         self.saveBufferedDataThread = threading.Thread(target=self.saveBufferedData, args=(self.stopThreads, ))
         self.saveBufferedDataThread.start()
@@ -202,7 +213,11 @@ class Carrascas():
             logging.error("MQTT on_connect: It was not posible to connect to the broker. Connection result: %s" % rc)
             return
 
+        # Start the database
         self.db = Database("carrascas.db")
+
+        # Setup the threads
+        self.setupThreads()
 
         # Subsription to the relevant topics
         client.subscribe(self.topicConf, 0)
