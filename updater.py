@@ -90,7 +90,7 @@ try:
             # Matamos el proceso actual
             try:
                 os.killpg(os.getpgid(process.pid), signal.SIGTERM)
-            except Exc  eption as e:
+            except Exception as e:
                 logging.info(
                     'No se ha podido matar el proceso. Excepcion: %s' % e)
             # Rearrancamos el proceso
